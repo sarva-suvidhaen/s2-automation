@@ -15,12 +15,12 @@ jobs:
       - name: Checkout source repository
         uses: actions/checkout@v2
         with:
-          repository: s2pl/awqs-fe
+          repository: s2pl/s2_portfolio
           token: ${{ secrets.SOURCE_REPO_TOKEN }}
 
       - name: Add destination repository as upstream
         run: |
-          git remote add upstream https://github.com/mukul-kr/my-private-repo.git
+          git remote add upstream https://github.com/sarva-suvidhaen/s2-portfolio.git
 
       - name: Push to destination repository
         run: |
