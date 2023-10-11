@@ -1,0 +1,29 @@
+name: Pull and Push Every 12 Hours
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 */12 * * *"
+
+jobs:
+  pull-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v2
+        with:
+          repository: s2pl/swachhdnr_fe
+          token: ${{ secrets.SOURCE_REPO_TOKEN }}
+
+      - name: Add destination repository as upstream
+        run: |
+          git remote add upstream https://github.com/sarva-suvidhaen/cms-fe.git
+
+      - name: Push to destination repository
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git push -f upstream main
