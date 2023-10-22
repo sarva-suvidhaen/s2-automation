@@ -1,4 +1,4 @@
-name: Pull and Push Every 12 Hours
+name: s2_portfolio
 
 on:
   push:
@@ -18,12 +18,19 @@ jobs:
           repository: s2pl/s2_portfolio
           token: ${{ secrets.SOURCE_REPO_TOKEN }}
 
-      - name: Add destination repository as upstream
+      - name: Add source repository as upstream
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          git remote add upstream https://github.com/sarva-suvidhaen/s2-portfolio.git
+          git remote add upstream https://sarva-suvidhaen:$GITHUB_TOKEN@github.com/sarva-suvidhaen/s2-portfolio.git
+
+      # - name: Pull from source repository
+      #   run: |
+      #     git pull upstream main
 
       - name: Push to destination repository
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git push -f upstream master
+          git config --unset-all http.https://github.com/.extraheader
+          git push upstream main
