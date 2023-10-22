@@ -12,22 +12,22 @@ jobs:
       - name: Checkout destination repository
         uses: actions/checkout@v2
         with:
-          repository: sarva-suvidhaen/cms-fe
+          repository: s2pl/swachhdnr_fe
           ref: main
-          token: ${{ secrets.PERSONAL_TOKEN }}
+          token: ${{ secrets.SOURCE_REPO_TOKEN }}
 
       - name: Add source repository as upstream
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          git remote add upstream https://mukul-kr:$GITHUB_TOKEN@github.com/s2pl/swachhdnr_fe.git
+          git remote add upstream https://sarva-suvidhaen:$GITHUB_TOKEN@github.com/sarva-suvidhaen/cms-fe.git
 
-      - name: Pull from source repository
-        run: |
-          git pull upstream main
+      # - name: Pull from source repository
+      #   run: |
+      #     git pull upstream main
 
       - name: Push to destination repository
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git push origin main
+          git push upstream main
