@@ -9,11 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout destination repository
+      - name: Checkout source repository
         uses: actions/checkout@v2
         with:
           repository: s2pl/swachhdnr_fe
-          ref: main
           token: ${{ secrets.SOURCE_REPO_TOKEN }}
 
       - name: Add source repository as upstream
