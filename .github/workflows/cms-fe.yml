@@ -1,4 +1,4 @@
-name: Pull and Push Every 12 Hours
+name: swachhdnr_fe
 
 on:
   push:
