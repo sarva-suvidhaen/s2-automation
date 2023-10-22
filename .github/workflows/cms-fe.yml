@@ -13,11 +13,13 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: sarva-suvidhaen/cms-fe
-          token: ${{ secrets.SOURCE_REPO_TOKEN }}
+          token: ${{ secrets.PERSONAL_TOKEN }}
 
       - name: Add source repository as upstream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git remote add upstream https://github.com/s2pl/swachhdnr_fe.git
+          git remote add upstream https://mukul-kr:$GITHUB_TOKEN@github.com/s2pl/swachhdnr_fe.git
 
       - name: Pull from source repository
         run: |
