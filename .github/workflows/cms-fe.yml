@@ -15,12 +15,18 @@ jobs:
       - name: Checkout source repository
         uses: actions/checkout@v2
         with:
-          repository: s2pl/swachhdnr_fe
+          repository: sarva-suvidhaen/cms-fe
           token: ${{ secrets.SOURCE_REPO_TOKEN }}
 
       - name: Add destination repository as upstream
         run: |
-          git remote add upstream https://github.com/sarva-suvidhaen/cms-fe.git
+          git remote add upstream https://github.com/s2pl/swachhdnr_fe
+
+      - name: Pull from the source repository
+        run: |
+          git fetch upstream
+          git checkout main
+          git merge upstream/main
 
       - name: Push to destination repository
         run: |
