@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 */12 * * *"
+    - cron: "0 */1 * * *"
 
 jobs:
   pull-push:
@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: s2pl/s2_portfolio
-          token: ${{ secrets.SOURCE_REPO_TOKEN }}
+          token: ${{ secrets.PERSONAL_TOKEN  }}
 
       - name: Add source repository as upstream
         env:
