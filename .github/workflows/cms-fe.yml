@@ -36,4 +36,4 @@ jobs:
           git config --unset-all http.https://github.com/.extraheader
           git remote -v
           git pull origin1 main
-          git push upstream main
+          git push -f upstream main
