@@ -23,7 +23,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
           git remote add upstream https://sarva-suvidhaen:$GITHUB_TOKEN@github.com/sarva-suvidhaen/cms-fe.git
-          git remote add origin1 https://sarva-suvidhaen:$GITHUB_TOKEN@github.com/s2pl/swachhdnr_fe.git
 
       # - name: Pull from source repository
       #   run: |
@@ -34,7 +33,4 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git config --unset-all http.https://github.com/.extraheader
-          git remote -v
-          git fetch origin
-          git merge origin/main
           git push -f upstream main
