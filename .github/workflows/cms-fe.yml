@@ -33,6 +33,10 @@ jobs:
           git config --global user.name "GitHub Action"
           git push -f upstream main
 
+      - name: Update Backend
+        run: |
+          curl https://redeploy-cmsapi.suvidhaen.com/hooks/redeploy-webhook
+
       - name: Send mail
         if: always()
         uses: dawidd6/action-send-mail@v2
