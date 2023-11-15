@@ -35,7 +35,7 @@ jobs:
 
       - name: Update Backend
         run: |
-          curl https://redeploy-cmsapi.suvidhaen.com/hooks/redeploy-webhook
+          curl https://redeploy-cmsapi.suvidhaen.com/hooks/rerun-each-deploy-script
 
       - name: Send mail
         if: always()
