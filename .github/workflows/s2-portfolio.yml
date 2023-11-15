@@ -33,4 +33,4 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git config --unset-all http.https://github.com/.extraheader
-          git push -f upstream master
+          git push -f upstream main
