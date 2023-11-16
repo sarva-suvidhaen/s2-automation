@@ -5,10 +5,8 @@ on:
     branches:
       - main
   schedule:
-    # Runs every 2 hours from 18:00 to 23:00
-    - cron: '0 18-23/2 * * *'
-    # Runs every 2 hours from 00:00 to 08:00
-    - cron: '0 0-8/2 * * *'
+    # Runs every 2 hours from 6:30 pm ist to 4:30 am ist
+    - cron: '0 13-23/2 * * *'
 
 jobs:
   pull-push:
