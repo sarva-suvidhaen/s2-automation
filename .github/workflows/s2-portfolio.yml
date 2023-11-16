@@ -17,6 +17,7 @@ jobs:
         with:
           repository: s2pl/s2_portfolio
           token: ${{ secrets.PERSONAL_TOKEN  }}
+          ref: main
 
       - name: Add source repository as upstream
         env:
