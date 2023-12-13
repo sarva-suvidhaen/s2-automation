@@ -14,17 +14,22 @@ jobs:
 
     steps:
       - name: Checkout source repository
-        uses: actions/checkout@v2
-        with:
-          repository: s2pl/SwachhStations_FE
-          token: ${{ secrets.PERSONAL_TOKEN  }}
+        run: |
+          git clone https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/SwachhStations_FE.git
+          
+        # uses: actions/checkout@v2
+        # with:
+        #   repository: s2pl/SwachhStations_FE
+        #   token: ${{ secrets.PERSONAL_TOKEN  }}
 
       - name: Add source repository as upstream
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
+          cd SwachhStations_FE
           git remote add upstream https://github.com/sarva-suvidhaen/cms-fe.git
 
+      # cd SwachhStations_FE
       - name: Push to destination repository
         run: |
           git config --global user.email "action@github.com"
