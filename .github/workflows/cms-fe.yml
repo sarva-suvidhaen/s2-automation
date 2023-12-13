@@ -29,9 +29,9 @@ jobs:
           cd SwachhStations_FE
           git remote add upstream https://github.com/sarva-suvidhaen/cms-fe.git
 
-      # cd SwachhStations_FE
       - name: Push to destination repository
         run: |
+          cd SwachhStations_FE
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git push -f upstream main
