@@ -27,7 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
           cd SwachhStations_FE
-          git remote add upstream https://github.com/sarva-suvidhaen/cms-fe.git
+          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/cms-fe.git
 
       - name: Push to destination repository
         run: |
