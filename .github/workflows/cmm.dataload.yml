@@ -1,7 +1,6 @@
 name: CMM Dataload
 
 on:
-  push:
   schedule:
     - cron: '0 1 * * *'
 

@@ -1,9 +1,6 @@
 name: SwachhStations_FE
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     # Runs every 2 hours from 10:30 pm ist to 4:30 am ist
     - cron: '0 17-23/2 * * *'
@@ -38,9 +35,13 @@ jobs:
           git config --global user.name "GitHub Action"
           git push -f upstream main
 
-      - name: Update Backend
+      - name: Update Backend 1
         run: |
           curl https://redeploy-cmsapi.suvidhaen.com/hooks/rerun-each-deploy-script
+
+      - name: Update Backend 2
+        run: |
+          curl https://redeploy-cmsapi2.suvidhaen.com/hooks/rerun-each-deploy-script
 
       - name: Send mail
         if: always()
@@ -57,6 +58,6 @@ jobs:
           # email body as text
           body: ${{ github.job }} job in worflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }}
           # comma-separated string, send email to
-          to: sonalirajput1088@gmail.com,mukul0000kumar@gmail.com,atul.nitt.cse@gmail.com,tomarm698@gmail.com,mohanakhil329@gmail.com
+          to: atul.nitt.cse@gmail.com,tomarm698@gmail.com,mohanakhil329@gmail.com
           # from email name
           from: github action
