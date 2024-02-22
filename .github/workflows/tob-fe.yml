@@ -28,12 +28,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          cd SwachhStations_FE
+          cd TrainOnBoarding_FE
           git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/tob-fe.git
 
       - name: Push to destination repository
         run: |
-          cd SwachhStations_FE
+          cd TrainOnBoarding_FE
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git push -f upstream main
