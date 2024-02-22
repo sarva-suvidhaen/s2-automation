@@ -1,6 +1,9 @@
 name: SwachhStations_FE_UAT
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     # Runs every 2 hours from 10:30 pm ist to 4:30 am ist
     - cron: '0 17-23/2 * * *'
@@ -14,7 +17,7 @@ jobs:
     steps:
       - name: Checkout source repository
         run: |
-          git clone -b uat https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/SwachhStations_FE.git
+          git clone -b main https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/TrainOnBoarding_FE.git
           
         # uses: actions/checkout@v2
         # with:
@@ -26,14 +29,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
           cd SwachhStations_FE
-          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/cms-fe-uat.git
+          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/tob-fe.git
 
       - name: Push to destination repository
         run: |
           cd SwachhStations_FE
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git push -f upstream uat
+          git push -f upstream main
 
       # - name: Update Backend 1
       #   run: |
