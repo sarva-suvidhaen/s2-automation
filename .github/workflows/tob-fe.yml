@@ -1,4 +1,4 @@
-name: SwachhStations_FE_UAT
+name: TOB_fe
 
 on:
   push:
