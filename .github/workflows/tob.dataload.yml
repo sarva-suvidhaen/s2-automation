@@ -19,7 +19,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        repository: s2pl/TrainOnBoarding_DO
+        repository: s2pl/TrainOnBoarding_BE
         token: ${{ secrets.PERSONAL_TOKEN }}
     
     - name: Setup environment
@@ -44,10 +44,10 @@ jobs:
         chmod +x geckodriver
         sudo mv geckodriver /usr/local/bin/
 
-    - name: Install Requirements
-      id: trainOnBoardingRequirementsInstallation
-      run: pip3 install -r requirements.txt
+    # - name: Install Requirements
+    #   id: trainOnBoardingRequirementsInstallation
+    #   run: pip3 install -r requirements.txt
 
     - name: Run automation.py
       id: trainOnBoardingAutomation
-      run: python automation.py
+      run: python train_api/automation.py
