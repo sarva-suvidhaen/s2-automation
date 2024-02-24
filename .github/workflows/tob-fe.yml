@@ -1,9 +1,6 @@
 name: TOB_fe
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     # Runs every 2 hours from 10:30 pm ist to 4:30 am ist
     - cron: '0 17-23/2 * * *'

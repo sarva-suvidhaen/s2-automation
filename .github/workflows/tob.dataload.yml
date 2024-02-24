@@ -1,0 +1,56 @@
+name: CMM Dataload
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 1 * * *'
+
+env:
+  TESSDATA_PREFIX: /usr/share/tesseract-ocr/4.00/tessdata/
+  CHROMEDRIVER_VERSION: 115.0.5790.170
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        repository: s2pl/TrainOnBoarding_DO
+        token: ${{ secrets.PERSONAL_TOKEN }}
+    
+    - name: Setup environment
+      run: |
+        sudo apt update
+        sudo apt install -y python3 python3-pip tesseract-ocr
+
+        pip3 install selenium pytesseract pillow
+
+        mkdir -p $HOME/drivers
+        cd $HOME/drivers
+
+        # Download and set up ChromeDriver
+        wget "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/122.0.6261.69/linux64/chromedriver-linux64.zip"
+        unzip chromedriver-linux64.zip
+        chmod +x chromedriver-linux64/chromedriver
+        sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
+
+        # Download and set up geckodriver (optional)
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
+        tar -xzf geckodriver-v0.33.0-linux64.tar.gz
+        chmod +x geckodriver
+        sudo mv geckodriver /usr/local/bin/
+
+    - name: Run automation.py
+      id: trainOnBoardingAutomation
+      continue-on-error: true
+      run: python automation.py
+
+    - name: Check test result
+      run: |
+        if [ "${{ steps.pro.outcome }}" == "failure" ] || [ "${{ steps.sick.outcome }}" == "failure" ] || [ "${{ steps.newwarranty.outcome }}" == "failure" ]; then
+          exit 1
+        fi
