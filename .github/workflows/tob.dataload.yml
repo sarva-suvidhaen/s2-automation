@@ -33,7 +33,7 @@ jobs:
         cd $HOME/drivers
 
         # Download and set up ChromeDriver
-        wget "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/122.0.6261.69/linux64/chromedriver-linux64.zip"
+        wget "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.71/linux64/chromedriver-linux64.zip"
         unzip chromedriver-linux64.zip
         chmod +x chromedriver-linux64/chromedriver
         sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
