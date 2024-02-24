@@ -44,13 +44,10 @@ jobs:
         chmod +x geckodriver
         sudo mv geckodriver /usr/local/bin/
 
+    - name: Install Requirements
+      id: trainOnBoardingRequirementsInstallation
+      run: pip3 install -r requirements.txt
+
     - name: Run automation.py
       id: trainOnBoardingAutomation
-      continue-on-error: true
       run: python automation.py
-
-    - name: Check test result
-      run: |
-        if [ "${{ steps.pro.outcome }}" == "failure" ] || [ "${{ steps.sick.outcome }}" == "failure" ] || [ "${{ steps.newwarranty.outcome }}" == "failure" ]; then
-          exit 1
-        fi
