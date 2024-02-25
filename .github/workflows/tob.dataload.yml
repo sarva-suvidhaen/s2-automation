@@ -21,33 +21,37 @@ jobs:
       with:
         repository: s2pl/TrainOnBoarding_DO
         token: ${{ secrets.PERSONAL_TOKEN }}
-    
-    - name: Setup environment
+
+    - name: Get chrome version
       run: |
-        sudo apt update
-        sudo apt install -y python3 python3-pip tesseract-ocr
+        google-chrome --version
+    
+    # - name: Setup environment
+    #   run: |
+    #     sudo apt update
+    #     sudo apt install -y python3 python3-pip tesseract-ocr
 
-        pip3 install selenium pytesseract pillow  
+    #     pip3 install selenium pytesseract pillow  
 
-        mkdir -p $HOME/drivers
-        cd $HOME/drivers
+    #     mkdir -p $HOME/drivers
+    #     cd $HOME/drivers
 
-        # Download and set up ChromeDriver
-        wget "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.71/linux64/chromedriver-linux64.zip"
-        unzip chromedriver-linux64.zip
-        chmod +x chromedriver-linux64/chromedriver
-        sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
+    #     # Download and set up ChromeDriver
+    #     wget "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.71/linux64/chromedriver-linux64.zip"
+    #     unzip chromedriver-linux64.zip
+    #     chmod +x chromedriver-linux64/chromedriver
+    #     sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
 
-        # Download and set up geckodriver (optional)
-        wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
-        tar -xzf geckodriver-v0.33.0-linux64.tar.gz
-        chmod +x geckodriver
-        sudo mv geckodriver /usr/local/bin/
+    #     # Download and set up geckodriver (optional)
+    #     wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
+    #     tar -xzf geckodriver-v0.33.0-linux64.tar.gz
+    #     chmod +x geckodriver
+    #     sudo mv geckodriver /usr/local/bin/
 
-    # - name: Install Requirements
-    #   id: trainOnBoardingRequirementsInstallation
-    #   run: pip3 install -r requirements.txt
+    # # - name: Install Requirements
+    # #   id: trainOnBoardingRequirementsInstallation
+    # #   run: pip3 install -r requirements.txt
 
-    - name: Run automation.py
-      id: trainOnBoardingAutomation
-      run: python automation.py
+    # - name: Run automation.py
+    #   id: trainOnBoardingAutomation
+    #   run: python automation.py
