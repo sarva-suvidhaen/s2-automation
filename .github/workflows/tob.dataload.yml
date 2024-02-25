@@ -22,36 +22,39 @@ jobs:
         repository: s2pl/TrainOnBoarding_DO
         token: ${{ secrets.PERSONAL_TOKEN }}
 
-    - name: Get chrome version
-      run: |
-        google-chrome --version
+
     
-    # - name: Setup environment
-    #   run: |
-    #     sudo apt update
-    #     sudo apt install -y python3 python3-pip tesseract-ocr
+    - name: Setup environment
+      run: |
+        sudo apt update
+        sudo apt install -y python3 python3-pip tesseract-ocr
 
-    #     pip3 install selenium pytesseract pillow  
+        pip3 install selenium pytesseract pillow  
 
-    #     mkdir -p $HOME/drivers
-    #     cd $HOME/drivers
+        mkdir -p $HOME/drivers
+        cd $HOME/drivers
 
-    #     # Download and set up ChromeDriver
-    #     wget "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.71/linux64/chromedriver-linux64.zip"
-    #     unzip chromedriver-linux64.zip
-    #     chmod +x chromedriver-linux64/chromedriver
-    #     sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
+        version=$(echo "Google Chrome   121.0.6167.184" | grep -oP '\d+\.\d+\.\d+\.\d+' | sed 's/\./\\./g')
+        url=$(wget -O- https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json | grep -Eo "[^,\"*]*$version\/linux64/chromedriver[^,\"*]*")
 
-    #     # Download and set up geckodriver (optional)
-    #     wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
-    #     tar -xzf geckodriver-v0.33.0-linux64.tar.gz
-    #     chmod +x geckodriver
-    #     sudo mv geckodriver /usr/local/bin/
 
-    # # - name: Install Requirements
-    # #   id: trainOnBoardingRequirementsInstallation
-    # #   run: pip3 install -r requirements.txt
+        # Download and set up ChromeDriver
+        wget $url
+        
+        unzip chromedriver-linux64.zip
+        chmod +x chromedriver-linux64/chromedriver
+        sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
 
-    # - name: Run automation.py
-    #   id: trainOnBoardingAutomation
-    #   run: python automation.py
+        # Download and set up geckodriver (optional)
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
+        tar -xzf geckodriver-v0.33.0-linux64.tar.gz
+        chmod +x geckodriver
+        sudo mv geckodriver /usr/local/bin/
+
+    # - name: Install Requirements
+    #   id: trainOnBoardingRequirementsInstallation
+    #   run: pip3 install -r requirements.txt
+
+    - name: Run automation.py
+      id: trainOnBoardingAutomation
+      run: python automation.py
