@@ -34,7 +34,7 @@ jobs:
         mkdir -p $HOME/drivers
         cd $HOME/drivers
 
-        version=$(echo "Google Chrome   121.0.6167.184" | grep -oP '\d+\.\d+\.\d+\.\d+' | sed 's/\./\\./g')
+        version=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | sed 's/\./\\./g')
         url=$(wget -O- https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json | grep -Eo "[^,\"*]*$version\/linux64/chromedriver[^,\"*]*")
 
 
