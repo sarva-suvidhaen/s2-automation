@@ -1,0 +1,36 @@
+name: TOB_fe_uat
+
+on:
+  schedule:
+    # Runs every 2 hours from 10:30 pm ist to 4:30 am ist
+    - cron: '0 17-23/2 * * *'
+    # # Runs every 2 hours from 6:30 pm ist to 4:30 am ist
+    # - cron: '0 13-23/2 * * *'
+
+jobs:
+  pull-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        run: |
+          git clone -b uat https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/TrainOnBoarding_FE.git
+          
+        # uses: actions/checkout@v2
+        # with:
+        #   repository: s2pl/SwachhStations_FE
+        #   token: ${{ secrets.PERSONAL_TOKEN  }}
+
+      - name: Add source repository as upstream
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          cd TrainOnBoarding_FE
+          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/tob-fe-uat.git
+
+      - name: Push to destination repository
+        run: |
+          cd TrainOnBoarding_FE
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git push -f upstream uat
