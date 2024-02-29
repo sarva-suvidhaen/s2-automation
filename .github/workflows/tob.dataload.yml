@@ -1,9 +1,6 @@
 name: TOB Dataload
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     - cron: '0 */3 * * *'
 
