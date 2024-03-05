@@ -3,32 +3,31 @@ name: s2_portfolio
 on:
   schedule:
     - cron: "0 */1 * * *"
-
+    
 jobs:
   pull-push:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout source repository
-        uses: actions/checkout@v2
-        with:
-          repository: s2pl/s2_portfolio
-          token: ${{ secrets.PERSONAL_TOKEN  }}
-          ref: main
+        run: |
+          git clone -b main https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/s2_portfolio.git
+          
+        # uses: actions/checkout@v2
+        # with:
+        #   repository: s2pl/SwachhStations_FE
+        #   token: ${{ secrets.PERSONAL_TOKEN  }}
 
       - name: Add source repository as upstream
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          git remote add upstream https://sarva-suvidhaen:$GITHUB_TOKEN@github.com/sarva-suvidhaen/s2-portfolio.git
-
-      # - name: Pull from source repository
-      #   run: |
-      #     git pull upstream main
+          cd SwachhStations_FE
+          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/s2-portfolio.git
 
       - name: Push to destination repository
         run: |
+          cd SwachhStations_FE
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git config --unset-all http.https://github.com/.extraheader
           git push -f upstream main
