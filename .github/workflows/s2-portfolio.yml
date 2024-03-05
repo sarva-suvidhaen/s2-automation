@@ -25,12 +25,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          cd SwachhStations_FE
+          cd s2_portfolio
           git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/s2-portfolio.git
 
       - name: Push to destination repository
         run: |
-          cd SwachhStations_FE
+          cd s2_portfolio
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git push -f upstream main
