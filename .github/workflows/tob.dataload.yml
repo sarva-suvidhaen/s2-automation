@@ -2,7 +2,7 @@ name: TOB Dataload
 
 on:
   schedule:
-    - cron: '0 */2 * * *'
+    - cron: '0 * * * *'
 
 env:
   TESSDATA_PREFIX: /usr/share/tesseract-ocr/4.00/tessdata/
