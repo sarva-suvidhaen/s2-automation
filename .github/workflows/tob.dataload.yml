@@ -31,13 +31,20 @@ jobs:
         mkdir -p $HOME/drivers
         cd $HOME/drivers
 
-        version=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | sed 's/\./\\./g')
-        url=$(wget -O- https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json | grep -Eo "[^,\"*]*$version\/linux64/chromedriver[^,\"*]*")
+        # Determine the version of Chrome installed
+        version=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | head -n 1)
 
+        # Fetch the appropriate ChromeDriver URL from the JSON file
+        url=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
+              | jq -r --arg version "$version" '.versions[] | select(.version == $version) | .downloads.chromedriver[] | select(.platform == "linux64") | .url')
+
+        if [ -z "$url" ]; then
+          echo "Failed to find ChromeDriver URL for version $version"
+          exit 1
+        fi
 
         # Download and set up ChromeDriver
-        wget $url
-        
+        wget $url -O chromedriver-linux64.zip
         unzip chromedriver-linux64.zip
         chmod +x chromedriver-linux64/chromedriver
         sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
