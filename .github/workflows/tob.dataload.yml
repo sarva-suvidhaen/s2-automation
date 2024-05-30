@@ -35,20 +35,20 @@ jobs:
         version=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | head -n 1)
 
         # Fetch the appropriate ChromeDriver URL from the JSON file
-        url=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
-              | grep -oP "\"$version\":\[\{.*?\}\]" | grep -oP '"url": "\K([^"]+)' | tail -n 1)
+        url=$(wget -O- https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
+              | grep -Eo "[^,\"*]*$version\/linux64/chromedriver[^,\"*]*")
 
         # If exact version not found, fallback to closest available version
         if [ -z "$url" ]; then
           echo "Failed to find ChromeDriver URL for version $version. Falling back to closest version."
           
           # Determine the closest version available
-          closest_version=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
+          closest_version=$(wget -O- https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
                             | grep -oP '"version": "\K([^"]+)' | sort -V | head -n 1)
 
           # Fetch the ChromeDriver URL for the closest version
-          url=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
-                | grep -oP "\"$closest_version\":\[\{.*?\}\]" | grep -oP '"url": "\K([^"]+)' | tail -n 1)
+          url=$(wget -O- https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
+                | grep -Eo "[^,\"*]*$closest_version\/linux64/chromedriver[^,\"*]*")
 
           if [ -z "$url" ]; then
             echo "Fallback failed. Unable to find ChromeDriver URL for closest version $closest_version."
