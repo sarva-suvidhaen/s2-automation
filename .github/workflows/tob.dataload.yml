@@ -24,7 +24,7 @@ jobs:
     - name: Setup environment
       run: |
         sudo apt update
-        sudo apt install -y python3 python3-pip tesseract-ocr
+        sudo apt install -y python3 python3-pip tesseract-ocr jq  
 
         pip3 install selenium pytesseract pillow  
 
@@ -35,20 +35,20 @@ jobs:
         version=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | head -n 1)
 
         # Fetch the appropriate ChromeDriver URL from the JSON file
-        url=$(wget -O- https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
-              | grep -Eo "[^,\"*]*$version\/linux64/chromedriver[^,\"*]*")
+        url=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
+              | jq -r --arg version "$version" '.versions[] | select(.version == $version) | .downloads.chromedriver[] | select(.platform == "linux64") | .url')
 
         # If exact version not found, fallback to closest available version
         if [ -z "$url" ]; then
           echo "Failed to find ChromeDriver URL for version $version. Falling back to closest version."
           
           # Determine the closest version available
-          closest_version=$(wget -O- https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
-                            | grep -oP '"version": "\K([^"]+)' | sort -V | head -n 1)
+          closest_version=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
+                            | jq -r '.versions | map(.version) | min_by(., (tonumber(.) - tonumber("'"$version"'")) | abs)')
 
           # Fetch the ChromeDriver URL for the closest version
-          url=$(wget -O- https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
-                | grep -Eo "[^,\"*]*$closest_version\/linux64/chromedriver[^,\"*]*")
+          url=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
+                | jq -r --arg closest_version "$closest_version" '.versions[] | select(.version == $closest_version) | .downloads.chromedriver[] | select(.platform == "linux64") | .url')
 
           if [ -z "$url" ]; then
             echo "Fallback failed. Unable to find ChromeDriver URL for closest version $closest_version."
@@ -75,3 +75,4 @@ jobs:
     - name: Run automation.py
       id: trainOnBoardingAutomation
       run: python automation.py
+
