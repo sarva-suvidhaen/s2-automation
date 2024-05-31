@@ -24,27 +24,33 @@ jobs:
     - name: Setup environment
       run: |
         sudo apt update
-        sudo apt install -y python3 python3-pip tesseract-ocr jq  
+        sudo apt install -y python3 python3-pip tesseract-ocr jq wget unzip
 
-        pip3 install selenium pytesseract pillow  
+        pip3 install selenium pytesseract pillow
 
         mkdir -p $HOME/drivers
         cd $HOME/drivers
 
         # Determine the version of Chrome installed
         version=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | head -n 1)
+        echo "Installed Chrome version: $version"
 
         # Fetch the appropriate ChromeDriver URL from the JSON file
         url=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
               | jq -r --arg version "$version" '.versions[] | select(.version == $version) | .downloads.chromedriver[] | select(.platform == "linux64") | .url')
 
+        if [ -n "$url" ]; then
+          echo "Found ChromeDriver URL for version $version: $url"
+        fi
+
         # If exact version not found, fallback to closest available version
         if [ -z "$url" ]; then
           echo "Failed to find ChromeDriver URL for version $version. Falling back to closest version."
-          
-          # Determine the closest version available
+
+          # Fetch all versions and find the closest one
           closest_version=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
-                            | jq -r '.versions | map(.version) | min_by(., (tonumber(.) - tonumber("'"$version"'")) | abs)')
+                            | jq -r '[.versions[].version] | sort | .[-1]')
+          echo "Closest version found: $closest_version"
 
           # Fetch the ChromeDriver URL for the closest version
           url=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
@@ -53,6 +59,8 @@ jobs:
           if [ -z "$url" ]; then
             echo "Fallback failed. Unable to find ChromeDriver URL for closest version $closest_version."
             exit 1
+          else
+            echo "Found ChromeDriver URL for closest version $closest_version: $url"
           fi
         fi
 
@@ -75,4 +83,3 @@ jobs:
     - name: Run automation.py
       id: trainOnBoardingAutomation
       run: python automation.py
-
