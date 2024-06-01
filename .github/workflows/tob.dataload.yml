@@ -49,7 +49,7 @@ jobs:
 
           # Fetch all versions and find the closest one
           closest_version=$(curl -s https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json \
-                            | jq -r '[.versions[].version] | sort | .[-1]')
+                        | jq -r --arg version "$version" '[.versions[].version | select(. < $version)] | max')
           echo "Closest version found: $closest_version"
 
           # Fetch the ChromeDriver URL for the closest version
