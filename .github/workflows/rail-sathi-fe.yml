@@ -1,0 +1,38 @@
+name: s2_portfolio
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 */1 * * *"
+    
+jobs:
+  pull-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        run: |
+          git clone -b main https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/RailSathiFE.git
+          
+        # uses: actions/checkout@v2
+        # with:
+        #   repository: s2pl/SwachhStations_FE
+        #   token: ${{ secrets.PERSONAL_TOKEN  }}
+
+      - name: Add source repository as upstream
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          cd RailSathiFE
+          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/RailSathiFE.git
+
+      - name: Push to destination repository
+        run: |
+          cd RailSathiFE
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git push -f upstream main
+
+          
