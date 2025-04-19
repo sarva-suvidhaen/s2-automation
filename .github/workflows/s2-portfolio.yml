@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 */1 * * *"
+    - cron: "*/15 * * * *"
     
 jobs:
   pull-push:
@@ -15,12 +15,7 @@ jobs:
       - name: Checkout source repository
         run: |
           git clone -b main https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/s2_portfolio.git
-          
-        # uses: actions/checkout@v2
-        # with:
-        #   repository: s2pl/SwachhStations_FE
-        #   token: ${{ secrets.PERSONAL_TOKEN  }}
-
+        
       - name: Add source repository as upstream
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
