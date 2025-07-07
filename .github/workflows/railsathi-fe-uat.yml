@@ -1,4 +1,4 @@
-name: rail_sathi
+name: rail_sathi_fe_uat
 
 on:
   push:
@@ -14,18 +14,18 @@ jobs:
     steps:
       - name: Checkout source repository
         run: |
-          git clone -b main https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/RailSathiFE.git -b uat
+          git clone -b uat https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/RailSathiFE.git RailSathiFEUAT
 
       - name: Add source repository as upstream
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          cd RailSathiFE
+          cd RailSathiFEUAT
           git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/RailSathiFEUAT.git
 
       - name: Push to destination repository
         run: |
-          cd RailSathiFE
+          cd RailSathiFEUAT
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git push -f upstream main
