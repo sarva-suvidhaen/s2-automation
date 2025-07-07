@@ -1,0 +1,33 @@
+name: rail_sathi
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "*/5 * * * *"
+    
+jobs:
+  pull-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        run: |
+          git clone -b main https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/RailSathiFE.git -b uat
+
+      - name: Add source repository as upstream
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          cd RailSathiFEUAT
+          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/RailSathiFEUAT.git
+
+      - name: Push to destination repository
+        run: |
+          cd RailSathiFE
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git push -f upstream main
+
+          
