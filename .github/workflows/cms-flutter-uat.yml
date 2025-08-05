@@ -1,0 +1,57 @@
+name: SwachhStations_Flutter_FE_UAT
+
+on:
+  schedule:
+    # Runs every 2 hours from 10:30 pm ist to 4:30 am ist
+    - cron: '*/15 * * * *'
+
+jobs:
+  pull-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        run: |
+          git clone -b uat https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/SwachhStations_FE_Flutter.git
+          
+        # uses: actions/checkout@v2
+        # with:
+        #   repository: s2pl/SwachhStations_FE
+        #   token: ${{ secrets.PERSONAL_TOKEN  }}
+
+      - name: Add source repository as upstream
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          cd SwachhStations_FE_Flutter
+          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/cms-flutter-uat.git
+
+      - name: Push to destination repository
+        run: |
+          cd SwachhStations_FE
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git push -f upstream uat
+
+      # - name: Update Backend 1
+      #   run: |
+      #     curl https://redeploy-cmsapi.suvidhaen.com/hooks/rerun-each-deploy-script
+
+      - name: Send mail
+        if: always()
+        uses: dawidd6/action-send-mail@v2
+        with:
+          # mail server settings
+          server_address: smtp.gmail.com
+          server_port: 465
+          # user credentials
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          # email subject
+          subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
+          # email body as text
+          body: ${{ github.job }} job in worflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }}
+          # comma-separated string, send email to
+          to: tomarm698@gmail.com
+          # from email name
+          from: github action
