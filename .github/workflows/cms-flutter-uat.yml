@@ -1,10 +1,12 @@
-name: SwachhStations_Flutter_FE_UAT
+name: CMS_FLUTTER_UAT
 
 on:
+  push:
+    branches:
+      - main
   schedule:
-    # Runs every 2 hours from 10:30 pm ist to 4:30 am ist
-    - cron: '*/5 * * * *'
-
+    - cron: "*/5 * * * *"
+    
 jobs:
   pull-push:
     runs-on: ubuntu-latest
@@ -12,30 +14,21 @@ jobs:
     steps:
       - name: Checkout source repository
         run: |
-          git clone -b uat https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/SwachhStations_FE_Flutter.git
-          
-        # uses: actions/checkout@v2
-        # with:
-        #   repository: s2pl/SwachhStations_FE
-        #   token: ${{ secrets.PERSONAL_TOKEN  }}
+          git clone -b uat https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/SwachhStations_FE_Flutter.git RailSathiFEUAT
 
       - name: Add source repository as upstream
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          cd SwachhStations_FE_Flutter
+          cd RailSathiFEUAT
           git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/cms-flutter-uat.git
 
       - name: Push to destination repository
         run: |
-          cd SwachhStations_FE
+          cd RailSathiFEUAT
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git push -f upstream uat
-
-      # - name: Update Backend 1
-      #   run: |
-      #     curl https://redeploy-cmsapi.suvidhaen.com/hooks/rerun-each-deploy-script
 
       - name: Send mail
         if: always()
@@ -55,3 +48,5 @@ jobs:
           to: tomarm698@gmail.com
           # from email name
           from: github action
+
+          
