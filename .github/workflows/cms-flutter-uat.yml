@@ -3,7 +3,7 @@ name: CMS_FLUTTER_UAT
 on:
   push:
     branches:
-      - main
+      - uat
   schedule:
     - cron: "*/5 * * * *"
     
