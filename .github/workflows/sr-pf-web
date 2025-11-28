@@ -1,0 +1,33 @@
+name: pf-sr-fe-web
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "*/15 * * * *"
+    
+jobs:
+  pull-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        run: |
+          git clone -b main https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/pf-sr-fe-web.git
+        
+      - name: Add source repository as upstream
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          cd s2_portfolio
+          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/pf-sr-fe-web.git
+
+      - name: Push to destination repository
+        run: |
+          cd s2_portfolio
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git push -f upstream main
+
+          
