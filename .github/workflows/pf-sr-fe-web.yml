@@ -20,12 +20,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          cd s2_portfolio
+          cd pf-sr-fe-web
           git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/pf-sr-fe-web.git
 
       - name: Push to destination repository
         run: |
-          cd s2_portfolio
+          cd pf-sr-fe-web
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git push -f upstream main
