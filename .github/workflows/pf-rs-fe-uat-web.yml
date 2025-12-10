@@ -1,0 +1,33 @@
+name: pf-rs-fe-uat-web
+
+on:
+  push:
+    branches:
+      - uat
+  schedule:
+    - cron: "*/5 * * * *"
+    
+jobs:
+  pull-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        run: |
+          git clone -b uat https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/s2pl/pf-rs-fe-web.git
+        
+      - name: Add source repository as upstream
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          cd pf-rs-fe-uat-web
+          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/pf-rs-fe-uat-web.git
+
+      - name: Push to destination repository
+        run: |
+          cd pf-rs-fe-uat-web
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git push -f upstream main
+
+          
