@@ -3,7 +3,7 @@ name: pf-rs-fe-uat-web
 on:
   push:
     branches:
-      - uat
+      - main
   schedule:
     - cron: "*/5 * * * *"
     
