@@ -28,6 +28,5 @@ jobs:
           cd pf-rs-fe-web
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git push -f upstream main
-
+          git push -f upstream HEAD:uat 
           
