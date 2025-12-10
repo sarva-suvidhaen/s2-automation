@@ -21,7 +21,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
           cd pf-rs-fe-web
-          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/pf-rs-feweb.git
+          git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/pf-rs-fe-web.git
 
       - name: Push to destination repository
         run: |
