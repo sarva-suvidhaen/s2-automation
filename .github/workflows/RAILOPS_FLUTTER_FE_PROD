@@ -25,7 +25,7 @@ jobs:
 
       - name: Push to destination repository
         run: |
-          cd RailSathiFEUAT
+          cd Sanchalak_FE
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git push -f upstream main
