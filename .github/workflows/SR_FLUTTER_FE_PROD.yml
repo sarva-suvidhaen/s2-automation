@@ -28,6 +28,8 @@ jobs:
           cd SwachhStations_FE_Flutter
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
+          git rm -rf --cached .github/workflows/
+          git commit --amend --no-edit
           git push -f upstream main
 
       
