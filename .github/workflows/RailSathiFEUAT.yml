@@ -1,4 +1,4 @@
-name: CMS_FLUTTER_UAT
+name: RailSathiFEUAT
 
 on:
   push:
