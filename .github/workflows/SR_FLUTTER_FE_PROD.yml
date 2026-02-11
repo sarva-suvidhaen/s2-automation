@@ -1,4 +1,4 @@
-name: CMS_FLUTTER_FE_PROD
+name: SR_FLUTTER_FE_PROD
 
 on:
   push:
