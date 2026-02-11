@@ -25,10 +25,12 @@ jobs:
 
       - name: Push to destination repository
         run: |
-          cd Sanchalak_FE
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git push -f upstream main
+           cd Sanchalak_FE
+           git config --global user.email "action@github.com"
+           git config --global user.name "GitHub Action"
+           git rm -rf --cached .github/workflows/
+           git commit --amend --no-edit
+           git push -f upstream main
 
       
 
