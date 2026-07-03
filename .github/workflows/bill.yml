@@ -1,4 +1,4 @@
-name: pf-rs-fe-web
+name: billing
 
 on:
   push:
