@@ -20,12 +20,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          cd RailSathiFE
+          cd RailSathiFE-web
           git remote add upstream https://sarva-suvidhaen:${{ secrets.PERSONAL_TOKEN  }}@github.com/sarva-suvidhaen/Railsathi-html-web.git
 
       - name: Push to destination repository
         run: |
-          cd RailSathiFE
+          cd Railsathi-web
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git push -f upstream main
